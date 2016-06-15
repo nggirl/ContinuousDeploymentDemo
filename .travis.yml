@@ -10,7 +10,17 @@ android:
   - extra-android-m2repository
 before_install:
 - openssl aes-256-cbc -K $encrypted_caf26dd8a009_key -iv $encrypted_caf26dd8a009_iv
-  -in evandroid.jks.enc -out keys/evandroid.jks -d
+  -in keys/evandroid.jks.enc -out keys/evandroid.jks -d
 - gem install fir-cli
 script:
 - ./gradlew assembleRelease
+deploy:
+  provider: releases
+  api_key:
+    secure: rtDiwbMj+A7GhzeymS26b0LHaTbVkPxXISVulTrIE+mCGRReiN9nIyyqUsfq3iTvyCcCtXtRw/qUcOasCkoAO1ksY8YXzL9xkTIa0IBQTVn3ZUKNx4/gk9lF2OyXQ8BbfULje0CTjN0YiLPTzbbqzm4BGAu6p4nwAJKgGWHZwMxQdQW/+JVVvPdWdbrsO5KUMxtICICgbXN1EvXaPO2+VEZmC1xtbDko562bFWLABOWTCw0fGfY7g6ul2L15skBtLXvNDwSNoCZRSgeZFV27bejrR52wGIAGpfWVFj+x3tvMYIWI6ljdUlUhRxzcPeRSFKSgEDkzNfPEwHVp2rNwS+znGWJH0X6vWuezGEiMQnncjhw/zGYwe+ZGmKmg4KPwC/eWVmvsUWxuFcbb1fuhUbjxlKJ6gTNABQlXrHWhvjLE2hwWkPyo+ZugxqMoujTmUKhE1BUBxuW89dcmKMRNRf2TiKgTRkW9m1U8EEUeFXtOJzHL9IqeN2S516rlB1Hc6KhA1D6CVDgXiQwqwOWSoxePInwa5+5ti/9F4sFPxTIczUUt6XpbF6PA1rP03dwOlwSMef67oMuOR01lV1F6XCx2ECgZc9p/ap/W3V4Y5EKRMMY9k8Obt4FtE1bFpiobE2V5QKQJZNyG6ANMPYZuVc9n2pD0huuYF10YqLYWUSs=
+  file: app/build/outputs/apk/app-release.apk
+  skip_cleanup: true
+  on:
+    tags: true
+    all_branches: true
+    repo: nggirl/ContinuousDeploymentDemo
