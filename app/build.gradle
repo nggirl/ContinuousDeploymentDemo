@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.3"
+    buildToolsVersion "23.0.2"
 
     defaultConfig {
         applicationId "me.logan.com.continuousdeploymentdemo"
@@ -11,9 +11,6 @@ android {
         versionCode 1
         versionName "1.0"
     }
-
-    compileSdkVersion 23
-    buildToolsVersion "22.0.1"
 
     signingConfigs {
         release {
