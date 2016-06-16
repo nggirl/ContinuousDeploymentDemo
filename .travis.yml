@@ -14,6 +14,21 @@ before_install:
 - gem install fir-cli
 script:
 - ./gradlew assembleRelease
+- echo "TRAVIS_BRANCH = "$TRAVIS_BRANCH
+- echo "TRAVIS_BUILD_DIR = "$TRAVIS_BUILD_DIR
+- echo "TRAVIS_BUILD_ID = "$TRAVIS_BUILD_ID
+- echo "TRAVIS_BUILD_NUMBER = "$TRAVIS_BUILD_NUMBER
+- echo "TRAVIS_COMMIT = "$TRAVIS_COMMIT
+- echo "TRAVIS_COMMIT_RANGE = "$TRAVIS_COMMIT_RANGE
+- echo "TRAVIS_JOB_ID = "$TRAVIS_JOB_ID
+- echo "TRAVIS_JOB_NUMBER = "$TRAVIS_JOB_NUMBER
+- echo "TRAVIS_OS_NAME = "$TRAVIS_OS_NAME
+- echo "TRAVIS_PULL_REQUEST = "$TRAVIS_PULL_REQUEST
+- echo "TRAVIS_REPO_SLUG = "$TRAVIS_REPO_SLUG
+- echo "TRAVIS_SECURE_ENV_VARS = "$TRAVIS_SECURE_ENV_VARS
+- echo "TRAVIS_TEST_RESULT = "$TRAVIS_TEST_RESULT
+- echo "TRAVIS_TAG = "$TRAVIS_TAG
+
 deploy:
   provider: releases
   api_key:
@@ -26,21 +41,5 @@ deploy:
 after_deploy:
 - fir p app/build/outputs/apk/app-release.apk -T $FIR_TOKEN -c "`git cat-file tag $TRAVIS_TAG`"
 - curl -d "appid=11457&to=logan676395@gmail.com,logan676@163.com&subject=[自动通知] 安卓新版本$TRAVIS_TAG发布&project=u2c0r2&signature=$SUBMAIL_SIGN&vars={\"TRAVIS_REPO_SLUG\":\"$TRAVIS_REPO_SLUG\",\"TRAVIS_TAG\":\"$TRAVIS_TAG\",\"TAG_DESCRIPTION\":\"$(git cat-file tag $TRAVIS_TAG | awk 1 ORS='<br>')\"}" https://api.submail.cn/mail/xsend.json
-
-echo "TRAVIS_BRANCH = "$TRAVIS_BRANCH
-echo "TRAVIS_BUILD_DIR = "$TRAVIS_BUILD_DIR
-echo "TRAVIS_BUILD_ID = "$TRAVIS_BUILD_ID
-echo "TRAVIS_BUILD_NUMBER = "$TRAVIS_BUILD_NUMBER
-echo "TRAVIS_COMMIT = "$TRAVIS_COMMIT
-echo "TRAVIS_COMMIT_RANGE = "$TRAVIS_COMMIT_RANGE
-echo "TRAVIS_JOB_ID = "$TRAVIS_JOB_ID
-echo "TRAVIS_JOB_NUMBER = "$TRAVIS_JOB_NUMBER
-echo "TRAVIS_OS_NAME = "$TRAVIS_OS_NAME
-echo "TRAVIS_PULL_REQUEST = "$TRAVIS_PULL_REQUEST
-echo "TRAVIS_REPO_SLUG = "$TRAVIS_REPO_SLUG
-echo "TRAVIS_SECURE_ENV_VARS = "$TRAVIS_SECURE_ENV_VARS
-echo "TRAVIS_TEST_RESULT = "$TRAVIS_TEST_RESULT
-echo "TRAVIS_TAG = "$TRAVIS_TAG
-
 git:
   depth: 1
