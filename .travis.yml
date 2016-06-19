@@ -28,18 +28,15 @@ script:
 - echo "TRAVIS_SECURE_ENV_VARS = "$TRAVIS_SECURE_ENV_VARS
 - echo "TRAVIS_TEST_RESULT = "$TRAVIS_TEST_RESULT
 - echo "TRAVIS_TAG = "$TRAVIS_TAG
-
 deploy:
-  provider: releases
+  provider: heroku
   api_key:
-    secure: rtDiwbMj+A7GhzeymS26b0LHaTbVkPxXISVulTrIE+mCGRReiN9nIyyqUsfq3iTvyCcCtXtRw/qUcOasCkoAO1ksY8YXzL9xkTIa0IBQTVn3ZUKNx4/gk9lF2OyXQ8BbfULje0CTjN0YiLPTzbbqzm4BGAu6p4nwAJKgGWHZwMxQdQW/+JVVvPdWdbrsO5KUMxtICICgbXN1EvXaPO2+VEZmC1xtbDko562bFWLABOWTCw0fGfY7g6ul2L15skBtLXvNDwSNoCZRSgeZFV27bejrR52wGIAGpfWVFj+x3tvMYIWI6ljdUlUhRxzcPeRSFKSgEDkzNfPEwHVp2rNwS+znGWJH0X6vWuezGEiMQnncjhw/zGYwe+ZGmKmg4KPwC/eWVmvsUWxuFcbb1fuhUbjxlKJ6gTNABQlXrHWhvjLE2hwWkPyo+ZugxqMoujTmUKhE1BUBxuW89dcmKMRNRf2TiKgTRkW9m1U8EEUeFXtOJzHL9IqeN2S516rlB1Hc6KhA1D6CVDgXiQwqwOWSoxePInwa5+5ti/9F4sFPxTIczUUt6XpbF6PA1rP03dwOlwSMef67oMuOR01lV1F6XCx2ECgZc9p/ap/W3V4Y5EKRMMY9k8Obt4FtE1bFpiobE2V5QKQJZNyG6ANMPYZuVc9n2pD0huuYF10YqLYWUSs=
-  file: app/build/outputs/apk/app-release.apk
-  skip_cleanup: true
-  on:
-    all_branches: true
-    repo: nggirl/ContinuousDeploymentDemo
+    secure: 2zWWXzK3IJXQpstdkQ4d2Zv1lBg21RWirZh1JD1me97W1xU2eXevh8HLBGUKmImO2oQsXFHzCnWTH48ZXfzjvoZysmPE1w59Gjdj2QUtGQhJWKNxJt+kcHXmFkyIWAshqTzyJdwiL0AwyW7pYAUyiEoi1O5gvZ6b/6UDr4gxKoshFcKFAKk8m4SzdCnhL6dzaQWF7qiZvGu1n/ij2aprvGuYhzx4pNL1Gq6y5pisv36epw66dxDT5Zpn5sKgXLRod1iLPPAlHmrF44Lj3399rzB8hMc30p+b0DRKBEyLiB9TqqyIYYfAhsAgEqBeB5AyIwpAEGK2I1iFN5X0YtF5jn/5eu9aASvYLRmH0YwX4A0f/phPQ7WO/9iUZDRSl+BOp24BCktrTZTsP3qP+dZ1hfkRpVh51jzKAw3P1CjR8YZy2wq942s4DgJnu70tZorLu3+/9AoWs956eriJcy8QM28iEVYpPm5PolwLMM2Hl5M/YgfHUKf2HCuzcxWLPiq3RMo0uqAna4dM61jiggNsFlf8DvdlTKQoMPjeWqdosK3QzAae1y+L/ZnTwPrYnipq7BiKYRwdIfiDcF5xcpkpzvJGU2FtSPCwH3Pbbb/47db9+v3QeCCRX7bMGIpR5vOMd9sV3miQIrVIxKN8yMV85bhAJo3Q0P1bxwJZgumlTFw=
+  app: ContinuousDeploymentDemo
 after_deploy:
-- fir p app/build/outputs/apk/app-release.apk -T $FIR_TOKEN -c "`git cat-file tag $TRAVIS_TAG`"
-- curl -d "appid=11457&to=logan676395@gmail.com,logan676@163.com&subject=[构建通知] 安卓新版本$TRAVIS_TAG发布&project=OonP52&signature=$SUBMAIL_SIGN&vars={\"TRAVIS_REPO_CHINESE_NAME\":\"$TRAVIS_REPO_CHINESE_NAME\",\"TRAVIS_TAG\":\"$TRAVIS_TAG\",\"TAG_DESCRIPTION\":\"$(git cat-file tag $TRAVIS_TAG | awk 1 ORS='<br>')\"}" https://api.submail.cn/mail/xsend.json
+- fir p app/build/outputs/apk/app-release.apk -T $FIR_TOKEN -c "`git cat-file tag
+  $TRAVIS_TAG`"
+- curl -d "appid=11457&to=logan676395@gmail.com,logan676@163.com&subject=[构建通知] 安卓新版本$TRAVIS_TAG发布&project=OonP52&signature=$SUBMAIL_SIGN&vars={\"TRAVIS_REPO_CHINESE_NAME\":\"$TRAVIS_REPO_CHINESE_NAME\",\"TRAVIS_TAG\":\"$TRAVIS_TAG\",\"TAG_DESCRIPTION\":\"$(git
+  cat-file tag $TRAVIS_TAG | awk 1 ORS='<br>')\"}" https://api.submail.cn/mail/xsend.json
 git:
   depth: 1
